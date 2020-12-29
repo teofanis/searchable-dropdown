@@ -15,7 +15,7 @@ class SearchableDropdownServiceProvider extends ServiceProvider
     public function register()
     {
       $this->loadViewsFrom(__DIR__.'/views/components', 'searchableDropdown');
-      Blade::component('searchableDropdown::dropdown', 'dropdown');
+      Blade::component('searchableDropdown::dropdown', 'searchable-dropdown');
     }
 
     /**
