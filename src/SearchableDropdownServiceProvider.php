@@ -25,6 +25,6 @@ class SearchableDropdownServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        //
     }
 }
