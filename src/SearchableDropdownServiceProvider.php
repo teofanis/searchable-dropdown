@@ -25,6 +25,8 @@ class SearchableDropdownServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::directive('searchableDropdownScripts', function(){
+          return "{!! view('searchableDropdown::partials.searchable-dropdown-scripts')->render(); !!}";
+        });
     }
 }
