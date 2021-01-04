@@ -1,6 +1,6 @@
 @props([
     'name' => '',
-    'entangle' => '', //Livewire Property that will have access to the local x-model.
+    'entangle' => '', 
     'provider' => '',
     'value' => null,
     'noResultsMessage' => 'No Results Found',
@@ -12,167 +12,22 @@
 @php
     $data = function_exists($provider)
         ? call_user_func($provider)
-        : collect();
+        : $provider;
     if ($data instanceof Illuminate\Database\Eloquent\Collection){
         $data = $data->toJson();
     } else if(is_array($data)){
         $data = json_encode($data);
     }
-    $uniqueID = Str::random(40);
+    $uniqueID = Str::random(15);
     $dropdownData = 'searchableDropdownData_'.$uniqueID;
 
 @endphp
 
 <div class="max-w-xs">
-    <script>
-        function {{$dropdownData}}(config) {
-            return {
-                data: config.data,
-
-                emptyOptionsMessage: config.emptyOptionsMessage ?? 'No results match your search.',
-
-                focusedOptionIndex: null,
-
-                name: config.name,
-
-                open: false,
-
-                selectAll: false,
-
-                onlySelected: false,
-
-                options: {},
-
-                placeholder: config.placeholder ?? 'Select an option',
-
-                search: '',
-                multiselect: config.multiselect,
-                @if($inLiveWire)
-                value: @entangle($entangle).defer,
-                @else
-                value: this.multiselect ? (config.value ?? []) : config.value,
-                @endif
-                closeListbox: function () {
-                    this.open = false
-
-                    this.focusedOptionIndex = null
-
-                    this.search = ''
-                },
-                focusNextOption: function () {
-                    if (this.focusedObjectIndex === null) return this.focusedObjectIndex = Object.keys(this.options).length - 1
-
-                    if (this.focusedOptionIndex + 1 >= Object.keys(this.options).length) return
-
-                    this.focusedOptionIndex++
-
-                    this.focusListOption('center');
-                },
-
-                focusPreviousOption: function () {
-                    if (this.focusedObjectIndex === null) return this.focusedObjectIndex = 0
-
-                    if (this.focusedOptionIndex <= 0) return
-
-                    this.focusedOptionIndex--
-
-                    this.focusListOption('center');
-                },
-
-                init: function () {
-                    this.options = this.data;
-
-                    if (this.multiselect) {
-                        this.value = Object.keys(this.options).filter(entry => this.value.includes(entry));
-                    } else {
-                        if (!(this.value in this.options)) this.value = null;
-                    }
-                    this.$watch('search', ((value) => {
-                        if (!this.open || !value) return this.options = this.data
-
-                        this.options = Object.keys(this.data)
-                            .filter((key) => this.data[key].toLowerCase().includes(value.toLowerCase()))
-                            .reduce((options, key) => {
-                                options[key] = this.data[key]
-                                return options
-                            }, {})
-                    }))
-                },
-                selectOption: function () {
-                    if (!this.open) return this.toggleListboxVisibility();
-
-                    var selectedValue = Object.keys(this.options)[this.focusedOptionIndex];
-
-                    if(!this.multiselect){
-                        if (this.value && selectedValue === this.value) {
-                            this.value = null;
-                        } else {
-                            this.value = selectedValue;
-                        }
-                        this.closeListbox();
-                    } else {
-                        if(this.value.includes(selectedValue)){
-                            this.value.splice(this.value.indexOf(selectedValue), 1);
-                        }else{
-                            this.value.push(selectedValue);
-                        }
-
-                    }
-
-                },
-                showSelectedOptions: function() {
-                    if (this.value.length === 0) return this.placeholder;
-                   return this.value.map(value => this.options[value]).join(',');
-                },
-                showOnlySelectedOptionsInList: function () {
-                    this.search='';
-                    if (this.onlySelected){
-                        this.options = Object.keys(this.data)
-                        .filter(key => this.value.includes(key))
-                        .reduce((options, key) => {
-                            options[key] = this.data[key];
-                            return options;
-                        }, {});
-                    } else {
-                        this.options = this.data;
-                    }
-
-                },
-                selectAllOptions: function () {
-
-                //Object.keys(this.data) <-- Use to select all OR options for all when not filtered or only filtered
-                 this.value = this.selectAll ? Object.keys(this.options): [];
-                },
-
-                toggleListboxVisibility: function () {
-                    if (this.open) return this.closeListbox()
-
-                    if( this.multiselect) {
-                        if (this.value.length) {
-                            this.focusListOptionIndex = Object.keys(this.options).indexOf(this.value[0]);
-                        }
-                    }else {
-                     this.focusedOptionIndex = Object.keys(this.options).indexOf(this.value)
-                    }
-                    if (this.focusedOptionIndex < 0 || this.focusListOptionIndex === null) this.focusedOptionIndex = 0
-                    this.open = true
-
-                    this.$nextTick(() => {
-                        this.$refs.search.focus()
-
-                        this.focusListOption('start');
-                    })
-                },
-
-                focusListOption(block = 'center'){
-                        this.$refs.listbox.children[this.focusedOptionIndex].scrollIntoView({
-                            block: block,
-                        })
-
-                },
-            }
-        }
-    </script>
+<script>
+    const event = new CustomEvent('search-dropdown-ready', { detail: {name: "{{$dropdownData}}", data: "{{$data}}"} });
+    window.dispatchEvent(event);
+</script>
     <div
             x-data="{{$dropdownData}}({
                 data: {{ $data }},
@@ -198,14 +53,14 @@
                         <span
                                 x-show="! open && ! multiselect"
                                 x-text="value in options ? options[value] : placeholder"
-                                :class="{ 'text-gray-500': ! (value in options) }"
-                                class="block truncate"
+                                :class="{ 'text-gray-500': ! (value in options), 'block' : ! open && ! multiselect}"
+                                class="truncate"
                         ></span>
                     <template x-if="multiselect">
                         <span
                             x-show="! open && multiselect"
-                            class="block truncate"
-                            :class=" { 'text-gray-500' : value.length === 0}"
+                            class="truncate"
+                            :class=" { 'text-gray-500' : value.length === 0, 'block' : ! open && multiselect}"
                             x-text="showSelectedOptions()"
                             :title="showSelectedOptions()" >
                         </span>
@@ -255,20 +110,20 @@
             >
 
                     <li x-show="multiselect && Object.keys(options).length"  class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9">
-                        <span class="w-full flex items-center justify-between">
+                        <span class="w-full items-center justify-between" :class="{'flex' : multiselect && Object.keys(options).length }">
                             <label :for="name + 'selectAll'" x-text="search != '' ? 'Select All Results' : 'Select All'"></label>
                             <input class="-mr-6 h-4 w-4 text-indigo-600" :id="name + 'selectAll'" x-model="selectAll" type="checkbox" x-on:change="selectAllOptions()" />
                         </span>
                     </li>
                     <li x-show="multiselect && value.length " class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9">
-                        <span class="w-full flex items-center justify-between underline text-indigo-600">
+                        <span class="w-full items-center justify-between underline text-indigo-600" :class="{'flex' : multiselect && value.length }">
                             <label :for="name + 'onlySelected'">Show only selected options ?</label>
                             <input class="-mr-6 h-4 w-4 text-indigo-600" :id="name + 'onlySelected'" x-model="onlySelected" type="checkbox" x-on:change="showOnlySelectedOptionsInList()" />
                         </span>
                     </li>
                 <template x-for="(key, index) in Object.keys(options)" :key="index">
                     <li
-                            :id="name + 'Option' + focusedOptionIndex"
+                            :id="name + 'Option' + index"
                             @click="selectOption()"
                             @mouseenter="focusedOptionIndex = index"
                             @mouseleave="focusedOptionIndex = null"
@@ -284,8 +139,8 @@
 
                         <span
                                 x-show="multiselect ? value.includes(key) : (key === value) "
-                                :class="{ 'text-white': index === focusedOptionIndex, 'text-indigo-600': index !== focusedOptionIndex }"
-                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600"
+                                :class="{ 'text-white': index === focusedOptionIndex, 'text-indigo-600': index !== focusedOptionIndex, 'flex' : multiselect ? value.includes(key) : (key === value) }"
+                                class="absolute inset-y-0 right-0  items-center pr-4 text-indigo-600"
                         >
                                 <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd"
