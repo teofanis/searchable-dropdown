@@ -2,6 +2,7 @@
 
 namespace Teofanis\SearchableDropdown;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,9 @@ class SearchableDropdownServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if(File::exists(__DIR__.'/helpers.php')){
+          require __DIR__.'/helpers.php';
+        }
         Blade::directive('searchableDropdownScripts', function(){
           return "{!! view('searchableDropdown::partials.searchable-dropdown-scripts')->render(); !!}";
         });

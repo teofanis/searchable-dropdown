@@ -7,36 +7,32 @@
     'placeholder' => 'Select an option',
     'inLiveWire' => false,
     'multiselect' => false,
-
+    'context' => null
 ])
 @php
-    $data = function_exists($provider)
-        ? call_user_func($provider)
-        : $provider;
-    if ($data instanceof Illuminate\Database\Eloquent\Collection){
-        $data = $data->toJson();
-    } else if(is_array($data)){
-        $data = json_encode($data);
+    $context = $context ? $context->id : null;
+    if($inLiveWire && !$context){
+        throw new \Exception('Did you forget to pass `this` as context to the component');
     }
-    $uniqueID = Str::random(15);
-    $dropdownData = 'searchableDropdownData_'.$uniqueID;
-
+    $data = getDropdownDataset($provider);
+    $dropdownFunctionName = getUniqueDropdownName($context);
 @endphp
-
 <div class="max-w-xs">
 <script>
-    const event = new CustomEvent('search-dropdown-ready', { detail: {name: "{{$dropdownData}}", data: "{{$data}}"} });
-    window.dispatchEvent(event);
+    var event = new CustomEvent('search-dropdown-ready', { detail:"{{$dropdownFunctionName}}"  } );
+    window.dispatchEvent(event);    
 </script>
     <div
-            x-data="{{$dropdownData}}({
+            x-data="{{ $dropdownFunctionName }}({
                 data: {{ $data }},
                 emptyOptionsMessage: '{{$noResultsMessage}}',
                 name: '{{$name}}',
                 placeholder: '{{$placeholder}}',
                 value: '{{$value}}',
-                multiselect: '{{$multiselect}}' })"
+                multiselect: '{{$multiselect}}',
+                })"
             x-init="init()"
+             
             @click.away="closeListbox()"
             @keydown.escape="closeListbox()"
             class="relative">

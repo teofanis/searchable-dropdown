@@ -1,6 +1,6 @@
-<script type="text/javascript" defer>
+<script type="text/javascript">
     (function() {
-         window.templateFunc =  function(config) {
+         var templateFunc =  function(config) {
             return {
                 data: config.data,
 
@@ -153,7 +153,7 @@
             }
         };
         window.addEventListener('search-dropdown-ready', function(e) {
-            var name = e.detail.name;
+            var name = e.detail;
             window[name] = templateFunc.bind({});
         });
     })();
