@@ -30,13 +30,13 @@
                 placeholder: '{{$placeholder}}',
                 value: '{{$value}}',
                 multiselect: '{{$multiselect}}',
+                context: '{{$context}}',
+                entangle: '{{$entangle}}'
                 })"
             x-init="init()"
-             
             @click.away="closeListbox()"
             @keydown.escape="closeListbox()"
             class="relative">
-
             <span class="inline-block w-full rounded-md shadow-sm">
                   <button
                           x-ref="dropdown-button"

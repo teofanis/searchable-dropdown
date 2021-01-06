@@ -21,12 +21,15 @@
                 placeholder: config.placeholder ?? 'Select an option',
 
                 search: '',
+
                 multiselect: config.multiselect,
-                @if($inLiveWire)
-                value: @entangle($entangle).defer,
-                @else
+
+                entangle: config.entangle,
+
+                context: config.context,
+               
                 value: this.multiselect ? (config.value ?? []) : config.value,
-                @endif
+                 
                 closeListbox: function () {
                     this.open = false
 
@@ -72,6 +75,17 @@
                                 return options
                             }, {})
                     }))
+                    var that = this;
+                    console.log(this.value);
+                    console.log(this.options);
+                    if(this.context && this.entangle){
+                        var livewireParent =  window.livewire.find(that.context);
+                        this.value = livewireParent.get(this.entangle);
+                        this.$watch('value', ((value) => {
+                            console.log(Object.values(value));
+                           livewireParent.set(that.entangle, Object.values(value));
+                        }));
+                    }
                 },
                 selectOption: function () {
                     if (!this.open) return this.toggleListboxVisibility();
@@ -89,7 +103,11 @@
                         if(this.value.includes(selectedValue)){
                             this.value.splice(this.value.indexOf(selectedValue), 1);
                         }else{
-                            this.value.push(selectedValue);
+                            var copy = this.value;
+                            copy.push(selectedValue);
+                            
+                            this.value = copy;
+                            //this.value.push(selectedValue);
                         }
                         if(this.onlySelected){
                             this.showOnlySelectedOptionsInList();
