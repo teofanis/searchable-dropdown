@@ -35,8 +35,15 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "post-install-cmd": [
+            "...",
+            "php artisan vendor:publish --tag=searchable-dropdown-config"
+        ],
+        "post-update-cmd": [
+            "...",
+            "php artisan vendor:publish --tag=searchable-dropdown-assets"
+        ]
     },
     "config": {
         "sort-packages": true

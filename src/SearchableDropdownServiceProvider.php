@@ -23,6 +23,10 @@ class SearchableDropdownServiceProvider extends ServiceProvider
 
       
       /** Register Directives */
+      Blade::directive('searchableDropdownStyles', function(){
+        return '<link rel="stylesheet" href="{{asset(\'/css/searchable-dropdown-styles.css\')}}">>';
+      });
+
       Blade::directive('searchableDropdownScripts', function(){
         return '<script src="{{asset(\'/js/searchable-dropdown-scripts.js\')}}"></script>';
       });
@@ -48,10 +52,8 @@ class SearchableDropdownServiceProvider extends ServiceProvider
         require __DIR__.'/helpers.php';
       }  
       /** Config Publishing */
-      $this->publishes([__DIR__.'/../config/config.php' => config_path('searchable-dropdown-config.php')], 'searchable-dropdown-config');
-      $this->publishes([__DIR__.'/../config/props.php' => config_path('searchable-dropdown-props.php')], 'searchable-dropdown-props');
-
+      $this->publishes([__DIR__.'/../config/config.php' => config_path('searchable-dropdown-config.php'), __DIR__.'/../config/props.php' => config_path('searchable-dropdown-props.php')], 'searchable-dropdown-config');
       /** Asset Publishing */
-      $this->publishes([__DIR__.'/assets/js' => public_path('js')],'searchable-dropdown-js');
+      $this->publishes([__DIR__.'/assets/js' => public_path('js'),  __DIR__.'/assets/css' => public_path('css')],'searchable-dropdown-assets');
     }
 }

@@ -22,12 +22,10 @@ $theme = getTheme();
         <span class="{{config('searchable-dropdown-config.styles.classes.wrapper')}}">
             @include('searchableDropdown::partials.button')
         </span>
-
-        <div x-show="open" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak class="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg">
+        <div x-show="open" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak class="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg searchable-no-scrollbars">
             @if(!$inLiveWire)
             <input type="hidden" name="{{$name}}" x-model="value" />
             @endif
-
             <x-searchable-dropdown-list :theme="$theme" />
         </div>
     </div>
