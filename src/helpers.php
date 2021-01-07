@@ -13,6 +13,17 @@ function getUniqueDropdownName($parent_id = null)
     return $uniqueID;
 }
 
+function searchableDropdownProps() {
+    return config('searchable-dropdown-props');
+}
+function getTheme() {
+    return [
+        'default-text-color' => config('searchable-dropdown-config.styles.theme.default-text-color'),
+        'default-primary-color' => config('searchable-dropdown-config.styles.theme.default-primary-color'),
+        'default-secondary-color' => config('searchalbe-dropdown-config.styles.theme.default-secondary-color')
+    ];
+}
+
 function getDropdownDataSet($provider)
 {
     $data = function_exists($provider)
