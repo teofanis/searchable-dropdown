@@ -1,5 +1,5 @@
-@props(['theme' => getTheme()])
-<li x-bind:id="name + 'Option' + index" x-on:click="selectOption(key)" role="option" class="relative py-2 pl-3 text-{{$theme['default-text-color']}} cursor-default select-none pr-9 hover:text-white hover:bg-{{$theme['default-primary-color']}}">
+@props(['theme' => getTheme(), 'settings'])
+<li x-bind:id="name + 'Option' + index" x-on:click="selectOption(key)" role="option" class="relative py-2 pl-3 text-{{$theme['default-text-color']}} cursor-default select-none pr-9 {{ $settings['alignment'] }} hover:text-white hover:bg-{{$theme['default-primary-color']}}">
     <span class="hover:text-white w-full">
         <span x-text="Object.values(options)[index]" class="block font-normal truncate font-normal hover:font-semibold"></span>
         <span x-show="multiselect ? value.includes(key) : (key === value) " :class="{'flex flex-row-reverse' : multiselect ? value.includes(key) : (key === value) }" class="absolute inset-y-0 right-0 w-full items-center pr-4 text-{{$theme['default-primary-color']}} hover:text-white">

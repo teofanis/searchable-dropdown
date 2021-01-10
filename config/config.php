@@ -23,6 +23,7 @@ return [
     'settings' => [
         'default-is-multiselect' => false,
         'default-is-in-livewire' => false, 
+        'default-list-item-alignment' => 'text-center'
     ],
      
 ];

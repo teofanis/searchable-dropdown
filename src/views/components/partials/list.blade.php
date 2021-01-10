@@ -1,4 +1,4 @@
-@props(['theme' => getTheme()])
+@props(['theme' => getTheme(), 'settings'])
 <ul x-ref="listbox" role="listbox" tabindex="-1" class="py-1 overflow-auto text-base leading-6 rounded-md shadow-xs max-h-60 focus:outline-none sm:text-sm sm:leading-5">
     <li x-show="multiselect && Object.keys(options).length" class="relative py-2 pl-3 text-{{$theme['default-text-color']}} cursor-default select-none pr-9">
         <span class="w-full items-center justify-between" :class="{'flex' : multiselect && Object.keys(options).length }">
@@ -13,7 +13,7 @@
         </span>
     </li>
     <template x-for="(key, index) in Object.keys(options)" :key="index">
-        <x-searchable-dropdown-list-item :theme="$theme" />
+        <x-searchable-dropdown-list-item :theme="$theme" :settings="$settings"/>
     </template>
     @include('searchableDropdown::partials.no-results-found')
 </ul>

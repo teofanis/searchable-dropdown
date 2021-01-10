@@ -7,6 +7,7 @@ return [
     'entangle' => '', 
     'provider' => '',
     'value' => null,
+    'alignListItems' => config('searchable-dropdown.config.settings.default-list-item-alignment'),
     'noResultsMessage' => config('searchable-dropdown-config.placeholders.default-no-results-message'),
     'placeholder' => config('searchable-dropdown-config.placeholders.default-placeholder'),
     'searchFieldPlaceholder' => config('searchable-dropdown-config.placeholders.default-search-placeholder'),

@@ -26,7 +26,7 @@ $theme = getTheme();
             @if(!$inLiveWire)
             <input type="hidden" name="{{$name}}" x-model="value" />
             @endif
-            <x-searchable-dropdown-list :theme="$theme" />
+            <x-searchable-dropdown-list :theme="$theme" :settings="['alignment' => $alignListItems]" />
         </div>
     </div>
 
