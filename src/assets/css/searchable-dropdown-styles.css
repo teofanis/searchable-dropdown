@@ -1,0 +1,17 @@
+:root {
+  --searchable-dropdown-placeholder: #a9a9a9;
+}
+
+.searchable-no-scrollbars *::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* Chrome/Safari/Webkit */
+}
+
+.searchable-no-scrollbars * {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+}
+
+.searchable-dropdown-placeholder-color {
+  color: var(--searchable-dropdown-placeholder);
+}

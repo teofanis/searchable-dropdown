@@ -1,0 +1,1 @@
+<div x-show="! Object.keys(options).length"  x-text="emptyOptionsMessage" class="px-3 py-2 text-{{$theme['default-text-color']}} cursor-default select-none"></div>
