@@ -24,7 +24,7 @@
            entangle: config.entangle,
 
            context: config.context,
-          
+
            value: this.multiselect ? (config.value ?? []) : config.value,
 
            closeListbox: function () {
@@ -34,7 +34,7 @@
 
            init: function () {
                this.options = this.data;
-               
+
                if (this.multiselect) {
                    this.value = Object.keys(this.options).filter(entry => this.value.includes(entry));
 
@@ -42,19 +42,19 @@
                    if (!(this.value in this.options)) this.value = null;
                }
                this.$watch('search', ((value) => {
-                 
+
                     this.options = Object.keys(this.data)
                        .filter((key) => this.data[key].toLowerCase().includes(value.toLowerCase()))
                        .reduce((options, key) => {
                            options[key] = this.data[key]
                            return options
                        }, {});
-               
+
                }))
-   
-               
+
+
                var that = this;
-                
+
                console.log(this.value);
                console.log(this.options);
                if(this.context && this.entangle){
@@ -85,8 +85,15 @@
                    if(this.onlySelected){
                        this.showOnlySelectedOptionsInList();
                    }
+                   if (this.value.length != Object.keys(this.data).length && this.selectAll) {
+                       this.selectAll = false;
+                   }
                }
 
+           },
+           shouldShowDisplaySelectedOptions()
+           {
+               return this.multiselect && this.value.length && this.value.length != Object.keys(this.data).length;
            },
            showSelectedOptions: function() {
                if (this.value.length === 0) return this.placeholder;
@@ -109,9 +116,13 @@
                }
            },
            selectAllOptions: function () {
-
-           //Object.keys(this.data) <-- Use to select all OR options for all when not filtered or only filtered
-            this.value = this.selectAll ? Object.keys(this.options): [];
+               if (this.selectAll) {
+                   this.value = Object.keys(this.data);
+                   this.onlySelected = false;
+                   this.options = this.data;
+               } else {
+                   this.value = [];
+                }
            },
            toggleListboxVisibility: function () {
                if (this.open) return this.closeListbox();
