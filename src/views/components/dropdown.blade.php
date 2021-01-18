@@ -16,6 +16,7 @@ $theme = getTheme();
             name: '{{$name}}',
             placeholder: '{{$placeholder}}',
             value: '{{$value}}',
+            entangle: '{{$entangle}}',
             multiselect: '{{$multiselect}}',
             context: '{{$context}}',
             })" x-init="init()" @click.away="closeListbox()" @keydown.escape="closeListbox()" class="relative">

@@ -33,39 +33,32 @@
            },
 
            init: function () {
-               this.options = this.data;
+            this.options = this.data;
 
-               if (this.multiselect) {
-                   this.value = Object.keys(this.options).filter(entry => this.value.includes(entry));
+            if (this.multiselect) {
+                this.value = Object.keys(this.options).filter(entry => this.value.includes(entry));
 
-               } else {
-                   if (!(this.value in this.options)) this.value = null;
-               }
-               this.$watch('search', ((value) => {
+            } else {
+                if (!(this.value in this.options)) this.value = null;
+            }
+            this.$watch('search', ((value) => {
 
-                    this.options = Object.keys(this.data)
-                       .filter((key) => this.data[key].toLowerCase().includes(value.toLowerCase()))
-                       .reduce((options, key) => {
-                           options[key] = this.data[key]
-                           return options
-                       }, {});
+                 this.options = Object.keys(this.data)
+                    .filter((key) => this.data[key].toLowerCase().includes(value.toLowerCase()))
+                    .reduce((options, key) => {
+                        options[key] = this.data[key]
+                        return options
+                    }, {});
 
-               }))
+            }))
 
-
-               var that = this;
-
-               console.log(this.value);
-               console.log(this.options);
-               if(this.context && this.entangle){
-                   var livewireParent =  window.livewire.find(that.context);
-                   //this.value = livewireParent.get(this.entangle);
-                   this.$watch('value', ((value) => {
-                       console.log(Object.values(value));
-                      //livewireParent.set(that.entangle, Object.values(value));
-                   }));
-               }
-           },
+            if (this.context && this.entangle) {
+             var livewireParent =  window.livewire.find(this.context);
+                this.$watch('value', (() => {
+                 livewireParent.set(this.entangle, Object.values(this.value));
+             }));
+            }
+        },
            selectOption: function (selectedValue) {
                if (!this.open) return this.toggleListboxVisibility();
 
