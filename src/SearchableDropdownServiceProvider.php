@@ -24,7 +24,7 @@ class SearchableDropdownServiceProvider extends ServiceProvider
       
       /** Register Directives */
       Blade::directive('searchableDropdownStyles', function(){
-        return '<link rel="stylesheet" href="{{asset(\'/css/searchable-dropdown-styles.css\')}}">>';
+        return '<link rel="stylesheet" href="{{asset(\'/css/searchable-dropdown-styles.css\')}}">';
       });
 
       Blade::directive('searchableDropdownScripts', function(){
