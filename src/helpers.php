@@ -24,15 +24,15 @@ function getTheme() {
     ];
 }
 
-function getDropdownDataSet($provider)
+function getDropdownDataSet($data)
 {
-    $data = function_exists($provider)
-        ? call_user_func($provider)
-        : $provider;
-    if ($data instanceof Illuminate\Database\Eloquent\Collection){
-        $data = $data->toJson();
-    } else if(is_array($data)){
-        $data = json_encode($data);
+    if (!$data ) {
+        return collect()->toJson();
     }
+    $data=collect($data);
+    if (is_scalar($data->first())) {
+        $data=collect($data)->map(fn($value,$key)=>['key'=>$key, 'value'=>$value]);
+    } 
+    $data = json_encode($data->values()->toArray());
     return $data;
 }

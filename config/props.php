@@ -1,11 +1,11 @@
 <?php
 /*
- * Searchable Dropdown props
+ * Searchable Dropdown props default values
  */
 return [
     'name' => '',
     'entangle' => '',
-    'provider' => '',
+    'data' => '',
     'value' => null,
     'alignListItems' => config('searchable-dropdown-config.settings.default-list-item-alignment'),
     'noResultsMessage' => config('searchable-dropdown-config.placeholders.default-no-results-message'),
