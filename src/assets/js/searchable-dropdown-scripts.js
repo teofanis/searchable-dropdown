@@ -55,7 +55,8 @@
             if (this.context && this.entangle) {
              var livewireParent =  window.livewire.find(this.context);
                 this.$watch('value', (() => {
-                 livewireParent.set(this.entangle, Object.values(this.value));
+                var updateValue = this.multiselect ? Object.values(this.value) : this.value;
+                livewireParent.set(this.entangle, updateValue);
              }));
             }
         },
