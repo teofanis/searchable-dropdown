@@ -1,7 +1,11 @@
-<button x-ref="dropdown-button" @click.prevent="toggleListboxVisibility()" :aria-expanded="open" aria-haspopup="listbox" type="button" class="{{config('searchable-dropdown-config.styles.classes.button')}}">
-    <span x-show="! open && ! multiselect" x-text="value in options ? options[value] : placeholder" x-bind:class="{ 'searchable-dropdown-placeholder-color' : ! (value in options), 'block' : ! open && ! multiselect}" class="truncate"></span>
+<button x-ref="dropdown-button" @click.prevent="toggleListboxVisibility()" :aria-expanded="open" aria-haspopup="listbox" 
+    type="button" class="{{config('searchable-dropdown-config.styles.classes.button')}}">
+    <span x-show="! open && ! multiselect" x-text="getButtonText()" 
+        x-bind:class="{ 'searchable-dropdown-placeholder-color' : ! hasValidValue() , 'block' : ! open && ! multiselect}" 
+        class="truncate"></span>
     <template x-if="multiselect">
-        <span x-show="! open && multiselect" class="truncate" x-bind:class=" { 'searchable-dropdown-placeholder-color' : value.length === 0, 'block' : ! open && multiselect}" x-text="showSelectedOptions()" x-bind:title="showSelectedOptions()">
+        <span x-show="! open && multiselect" class="truncate" x-bind:class=" { 'searchable-dropdown-placeholder-color' : value.length === 0, 'block' : ! open && multiselect}" 
+        x-text="showSelectedOptions()" x-bind:title="showSelectedOptions()">
         </span>
     </template>
     <input x-ref="search" x-show="open" x-model.debounce.250ms="search" @keydown.enter.stop.prevent="selectOption()" type="search" placeholder="{{$searchFieldPlaceholder}}" class="w-full h-full form-control focus:outline-none pr-2" />

@@ -36,34 +36,34 @@ function findMe(name)
             whoami: '',
             setup:false,
             value: null,
-
+            
             closeListbox() {
                 this.open = false;
                 this.search = '';
             },
-
+            
             init() {
-
-                me = this;
                 this.setup = true;
                 this.options = this.data;
 
-                if (this.multiselect) {
-                    this.value = this.options.filter(item => me.value.includes(item.key));
-                } else {
-                    if (!this.options.filter(item => me.value == item.key)) this.value = null;
-                }
-
-                this.$watch('search', ((value) => {
-                    me.options = me.data.filter((item) => item.value.toLowerCase().includes(value.toLowerCase()))
-                }))
-
                 if (this.context && this.entangle) {
                     var livewireParent = window.livewire.find(this.context);
+                    this.value = livewireParent.get(this.entangle)
                     this.$watch('value', (updateValue) => {
                         livewireParent.set(this.entangle, updateValue);
                     });
                 }
+                
+                if (this.multiselect) {
+                    this.value = this.options.filter(item => this.value.includes(item.key));
+                } else {
+                    if (!this.options.filter(item => this.value == item.key)) this.value = null;
+                }
+                
+                this.$watch('search', ((value) => {
+                    this.options = this.data.filter((item) => item.value.toLowerCase().includes(value.toLowerCase()))
+                }))
+                
 
             },
 
@@ -130,6 +130,28 @@ function findMe(name)
                     this.$refs.search.focus()
                 });
             },
+
+            hasValidValue() {
+                if (this.multiselect) {
+                    return this.options.filter(item => this.value.includes(item.key)).length;
+                } else {
+                    return this.options.filter(item => this.value == item.key).length;
+                }
+            },
+
+            valueText() {
+                if (this.multiselect) {
+                    return this.options.filter(item => this.value.includes(item.key));
+                } else {
+                    item = this.options.filter(item => this.value == item.key)[0];
+                    return item ? item.value : false;
+                }
+            },
+
+            getButtonText() {
+                return  this.hasValidValue() ? this.valueText() : this.placeholder;
+            }
+
         }
     }; 
 
@@ -137,6 +159,7 @@ function findMe(name)
     var templateFunc = function (config) {
         if (me = findMe(config.whoami)) {
             me.data = config.data;
+            me.value = config.value;
             me.init();
             return me;
         } else {
@@ -147,9 +170,7 @@ function findMe(name)
 
    window.addEventListener('search-dropdown-ready', function(e) {
        var name = e.detail;
-       console.log('create ' + name);
        if (!window[name]) {
-            console.log('created ' + name);
             window[name] = templateFunc.bind({});
        }
    });

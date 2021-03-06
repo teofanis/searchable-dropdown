@@ -31,7 +31,6 @@ $theme = getTheme();
             @endif
             <x-searchable-dropdown-list :theme="$theme" :settings="['alignment' => $alignListItems]" />
         </div>
-        <span x-text="value"></span>
     </div>
 
 </div>
