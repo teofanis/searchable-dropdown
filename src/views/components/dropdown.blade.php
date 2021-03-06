@@ -20,7 +20,7 @@ $theme = getTheme();
             multiselect: '{{$multiselect}}',
             context: '{{$context}}',
             whoami: '{{$dropdownFunctionName}}'
-            })" x-init="init()" @click.away="closeListbox()" @keydown.escape="closeListbox()" class="relative">
+            })" x-ref="{{$dropdownFunctionName}}" x-init="init()" @click.away="closeListbox()" @keydown.escape="closeListbox()" class="relative">
         <span class="{{config('searchable-dropdown-config.styles.classes.wrapper')}}">
             @include('searchableDropdown::partials.button')
         </span>

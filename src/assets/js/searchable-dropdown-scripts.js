@@ -1,6 +1,14 @@
-(function() {
+function findMe(name)
+{
+    var myEl = $('[x-ref="' + name + '"]')[0];
+    return myEl ? myEl.__x.$data : undefined;
+}
+
+(function () {
     var templateFunc = function (config) {
-        console.log(config)
+        if (me = findMe(config.whoami)) {
+            me.$nextTick(() => me.init());
+        }
         return {
             data: config.data,
 
@@ -38,7 +46,7 @@
             init: function () {
                 me = this;
                 this.options = this.data;
-                console.log(this.options.map(item => { return { key: (item.key + ''), value: (item.value + '') } }));
+
                 if (this.multiselect) {
                     this.value = this.options.filter(item => me.value.includes(item.key));
                 } else {
@@ -122,7 +130,6 @@
    };
    window.addEventListener('search-dropdown-ready', function(e) {
        var name = e.detail;
-       console.log(e,name , window[name]);
        window[name] = templateFunc.bind({});
    });
 })();
