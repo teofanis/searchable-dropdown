@@ -5,7 +5,7 @@ if($inLiveWire && !$context){
 throw new \Exception('Did you forget to pass `this` as context to the component');
 }
 $data = getDropdownDataset($data);
-$dropdownFunctionName = getUniqueDropdownName($context);
+$dropdownFunctionName = getUniqueDropdownName($context, $entangle);
 $theme = getTheme();
 @endphp
 <div class="w-full">

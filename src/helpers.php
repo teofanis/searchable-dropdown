@@ -1,14 +1,17 @@
 <?php
 
-function getUniqueDropdownName($parent_id = null)
+function getUniqueDropdownName($parent_id = null, $entagle = null)
 {
     $randomNums = Str::random(15);
     $uniqueID = 'searchableDropdownData_'.$randomNums;
     if($parent_id){
-        if(session()->has($parent_id)){
-            return session()->get($parent_id);
-        }  
-        session()->put($parent_id, $uniqueID);       
+        $sess_id = "{$parent_id}_{$entagle}";
+        // TODO : somehow cleanup session at some point ????
+        if(session()->has($sess_id)){
+            $uniqueID = session()->get($sess_id);
+        } else { 
+            session()->put($sess_id, $uniqueID);       
+        }
     }
     return $uniqueID;
 }
