@@ -1,7 +1,8 @@
 function findMe(name)
 {
     var myEl = $('[x-ref="' + name + '"]')[0];
-    return myEl ? myEl.__x.$data : undefined;
+    var myX = myEl ? myEl.__x : undefined;
+    return myX ? myX.$data : undefined;
 }
 
 (function () {
