@@ -1,5 +1,5 @@
 <button x-ref="dropdown-button" @click.prevent="toggleListboxVisibility()" :aria-expanded="open" aria-haspopup="listbox" 
-    type="button" class="{{config('searchable-dropdown-config.styles.classes.button')}}">
+    type="button" {!! $disabled ? 'disabled' : ''!!} class="{{config('searchable-dropdown-config.styles.classes.button')}}">
     <span x-show="! open && ! multiselect" x-text="getButtonText()" 
         x-bind:class="{ 'searchable-dropdown-placeholder-color' : ! hasValidValue() , 'block' : ! open && ! multiselect}" 
         class="truncate"></span>

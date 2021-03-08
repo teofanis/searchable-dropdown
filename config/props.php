@@ -16,4 +16,5 @@ return [
     'label' => null,
     'required' => false,
     'context' => null,
+    'disabled' => false,
 ];
