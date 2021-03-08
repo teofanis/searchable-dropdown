@@ -7,9 +7,14 @@ throw new \Exception('Did you forget to pass `this` as context to the component'
 $data = getDropdownDataset($data);
 $dropdownFunctionName = getUniqueDropdownName($context, $entangle);
 $theme = getTheme();
+$placeholder = $required ? $placeholder . ' *' : $placeholder;
+$label = $required ? $label . ' *' : $label;
 @endphp
 <div class="w-full">
     @bindJSInstance
+    @if($label)
+        @include('searchableDropdown::partials.label')
+    @endif
     <div x-data="{{ $dropdownFunctionName }}({
             data: {{ $data }},
             emptyOptionsMessage: '{{$noResultsMessage}}',
@@ -24,6 +29,7 @@ $theme = getTheme();
         <span class="{{config('searchable-dropdown-config.styles.classes.wrapper')}}">
             @include('searchableDropdown::partials.button')
         </span>
+       
         <div x-show="open" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100" 
             x-transition:leave-end="opacity-0" x-cloak class="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg searchable-no-scrollbars">
             @if(!$inLiveWire)

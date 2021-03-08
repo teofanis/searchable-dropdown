@@ -13,5 +13,7 @@ return [
     'searchFieldPlaceholder' => config('searchable-dropdown-config.placeholders.default-search-placeholder'),
     'inLiveWire' => config('searchable-dropdown-config.settings.default-is-in-livewire'),
     'multiselect' => config('searchable-dropdown-config.settings.default-is-multiselect'),
+    'label' => null,
+    'required' => false,
     'context' => null,
 ];
