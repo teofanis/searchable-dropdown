@@ -59,6 +59,16 @@ function findMe(name)
                 } else {
                     if (!this.options.filter(item => this.value == item.key)) this.value = null;
                 }
+
+                this.$watch('value', (updatedValue) => {
+                    let selector = this.whoami + '_input';
+                    const input = document.getElementById(selector);
+                    if (input) {
+                        input.value = updatedValue;
+                        let event = new Event('change');
+                        input.dispatchEvent(event);
+                    }
+                });
                 
                 this.$watch('search', ((value) => {
                     this.options = this.data.filter((item) => item.value.toLowerCase().includes(value.toLowerCase()))

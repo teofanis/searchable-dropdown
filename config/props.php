@@ -17,4 +17,5 @@ return [
     'required' => false,
     'context' => null,
     'disabled' => false,
+    'xModel' => ''
 ];
