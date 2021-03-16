@@ -24,13 +24,28 @@ Finally add the dropdown styles and scripts in the head section of your layout f
 ```bash
 @searchableDropdownStyles
 @searchableDropdownScripts
-```;
+```
 
 ## Usage
 
-``` php
-// Usage description here
+Here's an example of how you could use the dropdown inside your blade views.
 ```
+<x-searchable-dropdown
+name=""
+/>
+```
+#Customization & Props
+| Props       | Required                            | Context  | Description                                                                                                                    | Type         | Example                                    |
+|-------------|-------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------|--------------|--------------------------------------------|
+| name        | no/recommended                      | any      | Used as any name attribute on input fields                                                                                     | string       | name="pizzaOptions"                        |
+| entangle    | Required within Livewire components | Livewire | The dropdown will share its state with the "entangled" property of the Livewire components its rendered in.                    | string       | entangle="pizzaToppings"                   |
+| context     | Required within Livewire components | Livewire | The dropdown will use the context to setup the state-sharing with livewire component. (Won't be required in future release)    | LW           | :context="$this"                           |
+| inLivewire  | Required within Livewire components | Livewire | Similarly to the context prop, this  will be used in the initial setup of the component. (Won't be required in future release) | boolean      | :in_live_wire="true"                       |
+| value       | no                                  | any      | Used as any value attribute on input fields                                                                                    | string/array | value="old('name')" \|\| :value="[1,2,3]"  |
+| data        | yes                                 | any      | Populates the dropdown list, collection keys will be returned for selections and values will be displayed.                     | Collection   | :data="dataProvider()"                     |
+| xModel      | no                                  | Alpine   | An option prop when you want to bind an apline js x-data field as a model of the dropdown.                                     | string       | x_model="modelName"                        |
+| multiselect | multiselect                         | any      | Used to behave like a multiple option dropdown or a single option dropdown                                                     | boolean      | :multiselect="true"                        |
+|             |                                     |          |                                                                                                                                |              |                                            |
 
 ### Testing
 
