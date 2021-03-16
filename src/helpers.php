@@ -1,14 +1,17 @@
 <?php
 
-function getUniqueDropdownName($parent_id = null)
+function getUniqueDropdownName($parent_id = null, $entagle = null)
 {
     $randomNums = Str::random(15);
     $uniqueID = 'searchableDropdownData_'.$randomNums;
     if($parent_id){
-        if(session()->has($parent_id)){
-            return session()->get($parent_id);
-        }  
-        session()->put($parent_id, $uniqueID);       
+        $sess_id = "{$parent_id}_{$entagle}";
+        // TODO : somehow cleanup session at some point ????
+        if(session()->has($sess_id)){
+            $uniqueID = session()->get($sess_id);
+        } else { 
+            session()->put($sess_id, $uniqueID);       
+        }
     }
     return $uniqueID;
 }
@@ -24,15 +27,15 @@ function getTheme() {
     ];
 }
 
-function getDropdownDataSet($provider)
+function getDropdownDataSet($data)
 {
-    $data = function_exists($provider)
-        ? call_user_func($provider)
-        : $provider;
-    if ($data instanceof Illuminate\Database\Eloquent\Collection){
-        $data = $data->toJson();
-    } else if(is_array($data)){
-        $data = json_encode($data);
+    if (!$data ) {
+        return collect()->toJson();
     }
+    $data=collect($data);
+    if (is_scalar($data->first())) {
+        $data=collect($data)->map(fn($value,$key)=>['key'=>$key, 'value'=>$value]);
+    } 
+    $data = json_encode($data->values()->toArray());
     return $data;
 }
