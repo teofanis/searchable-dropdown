@@ -1,11 +1,12 @@
-# Very short description of the package
+# Searchable Dropdown Description
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/teofanis/searchable-dropdown.svg?style=flat-square)](https://packagist.org/packages/teofanis/searchable-dropdown)
 [![Build Status](https://img.shields.io/travis/teofanis/searchable-dropdown/master.svg?style=flat-square)](https://travis-ci.org/teofanis/searchable-dropdown)
 [![Quality Score](https://img.shields.io/scrutinizer/g/teofanis/searchable-dropdown.svg?style=flat-square)](https://scrutinizer-ci.com/g/teofanis/searchable-dropdown)
 [![Total Downloads](https://img.shields.io/packagist/dt/teofanis/searchable-dropdown.svg?style=flat-square)](https://packagist.org/packages/teofanis/searchable-dropdown)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Searchable dropdown is a dropdown component built with Alpine JS and blade components. 
+It can be used as a normal dropdown or a multiple selection dropdown.
 
 ## Installation
 
@@ -14,6 +15,16 @@ You can install the package via composer:
 ```bash
 composer require teofanis/searchable-dropdown
 ```
+Publish the dropdowns' config and asset files
+```bash
+php artisan vendor:publish --tag=searchable-dropdown-config
+php artisan vendor:publish --tag=searchable-dropdown-assets
+```
+Finally add the dropdown styles and scripts in the head section of your layout file.  
+```bash
+@searchableDropdownStyles
+@searchableDropdownScripts
+```;
 
 ## Usage
 
