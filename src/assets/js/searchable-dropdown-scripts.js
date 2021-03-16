@@ -44,16 +44,14 @@ function findMe(name)
             
             init() {
                 this.setup = true;
-                this.options = this.data;
-
+                this.options = this.data;               
                 if (this.context && this.entangle) {
                     var livewireParent = window.livewire.find(this.context);
-                    this.value = livewireParent.get(this.entangle)
+                    this.value = livewireParent.get(this.entangle);
                     this.$watch('value', (updateValue) => {
                         livewireParent.set(this.entangle, updateValue);
                     });
                 }
-                
                 if (this.multiselect) {
                     this.value = this.options.filter(item => this.value.includes(item.key));
                 } else {
@@ -89,15 +87,17 @@ function findMe(name)
                     this.closeListbox();
                 } else {
                     if (this.value.includes(selectedValue)) {
-                        this.value.splice(this.value.indexOf(selectedValue), 1);
+                        this.value = this.value.filter(value => value !== selectedValue);
                     } else {
-                        this.value.push(selectedValue);
+                        this.value = this.value.concat(selectedValue);
                     }
                     if (this.onlySelected) {
                         this.showOnlySelectedOptionsInList();
                     }
                     if (this.value.length != this.data.length && this.selectAll) {
-                        this.selectAll = false;
+                         this.selectAll = false;
+                    } else if (this.value.length == this.data.length && !this.selectAll) {
+                        this.selectAll = true;
                     }
                 }
             },
@@ -108,7 +108,7 @@ function findMe(name)
 
             showSelectedOptions: function () {
                 if (this.value.length === 0) return this.placeholder;
-                return this.value.map(value => this.options[value]).join(',');
+                return this.options.filter(option => this.value.includes(option.key)).map(option => option.value);
             },
 
             showOnlySelectedOptionsInList() {
@@ -150,12 +150,8 @@ function findMe(name)
             },
 
             valueText() {
-                if (this.multiselect) {
-                    return this.options.filter(item => this.value.includes(item.key));
-                } else {
-                    item = this.options.filter(item => this.value == item.key)[0];
-                    return item ? item.value : false;
-                }
+                item = this.options.filter(item => this.value == item.key)[0];
+                return item ? item.value : false;
             },
 
             getButtonText() {
