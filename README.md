@@ -29,11 +29,41 @@ Finally add the dropdown styles and scripts in the head section of your layout f
 ## Usage
 
 Here's an example of how you could use the dropdown inside your blade views.
+
+#Simple select & Multiselect 
+
+![dropdown](https://user-images.githubusercontent.com/47872542/111536873-b188a800-8762-11eb-806a-f45a4ed41440.gif)
+
+
+-Select
 ```
 <x-searchable-dropdown
-name=""
-/>
+    name="pizzas"
+    entangle="pizzaType"
+    :context="$this"
+    :data="$pizzas"
+    in_live_wire="true"
+    no_results_message="No Pizzas found"
+    placheholder="Choose your Pizza"
+    search_placeholder="Search for pizzas..."
+    />
 ```
+-Multiselect
+```
+<x-searchable-dropdown
+    name="toppings"
+    entangle="chosenToppings"
+    :context="$this"
+    :data="$toppings"
+    in_live_wire="true"
+    :multiselect="true"
+    no_results_message="No toppings found"
+    placheholder="Select your toppings"
+    search_placeholder="Search toppings..."
+    />
+```
+
+
 #Customization & Props
 | Props                  | Required                            | Context  | Description                                                                                                                         | Type         | Example                                                |
 |------------------------|-------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------|--------------|--------------------------------------------------------|
