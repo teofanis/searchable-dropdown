@@ -1,15 +1,15 @@
 function findMe(name)
 {
-    var myEl = $('[x-ref="' + name + '"]')[0];
+    var myEl = document.querySelectorAll('[x-ref="' + name + '"]')[0];
     var myX = myEl ? myEl.__x : undefined;
     return myX ? myX.$data : undefined;
 }
 
 (function () {
     var mergeConfig = function (oldConfig, newConfig) {
-        oldConfig.data = newConfig.data;    
+        oldConfig.data = newConfig.data;
         oldConfig.emptyOptionsMessage = newConfig.emptyOptionsMessage;
-        oldConfig.name = newConfig.name; 
+        oldConfig.name = newConfig.name;
         oldConfig.placeholder = newConfig.placeholder;
         oldConfig.multiselect = newConfig.multiselect;
         oldConfig.entangle = newConfig.entangle;
@@ -36,15 +36,15 @@ function findMe(name)
             whoami: '',
             setup:false,
             value: null,
-            
+
             closeListbox() {
                 this.open = false;
                 this.search = '';
             },
-            
+
             init() {
                 this.setup = true;
-                this.options = this.data;               
+                this.options = this.data;
                 if (this.context && this.entangle) {
                     var livewireParent = window.livewire.find(this.context);
                     this.value = livewireParent.get(this.entangle);
@@ -67,11 +67,11 @@ function findMe(name)
                         input.dispatchEvent(event);
                     }
                 });
-                
+
                 this.$watch('search', ((value) => {
                     this.options = this.data.filter((item) => item.value.toLowerCase().includes(value.toLowerCase()))
                 }))
-                
+
 
             },
 
@@ -159,7 +159,7 @@ function findMe(name)
             }
 
         }
-    }; 
+    };
 
 
     var templateFunc = function (config) {
