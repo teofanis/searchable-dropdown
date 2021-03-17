@@ -1,4 +1,4 @@
-# Searchable Dropdown Description
+# Searchable Dropdown
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/teofanis/searchable-dropdown.svg?style=flat-square)](https://packagist.org/packages/teofanis/searchable-dropdown)
 [![Build Status](https://img.shields.io/travis/teofanis/searchable-dropdown/master.svg?style=flat-square)](https://travis-ci.org/teofanis/searchable-dropdown)
