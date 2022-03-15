@@ -132,7 +132,16 @@ function findMe(name)
                     this.value = [];
                 }
             },
-
+            isGrouped(item) {
+                const myItem = { ...item };
+                let isGrouped = false;
+                try {
+                    isGrouped = (myItem.key && myItem.key.includes('optgroup'));
+                } catch (e) {
+                    return false;
+                }
+                return isGrouped;
+            },
             toggleListboxVisibility() {
                 if (this.open) return this.closeListbox();
                 this.open = true;
