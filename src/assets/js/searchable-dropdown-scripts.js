@@ -53,7 +53,7 @@ function findMe(name)
                     });
                 }
                 if (this.multiselect) {
-                    this.value = this.options.filter(item => this.value.includes(item.key));
+                    this.value = this.options.filter(item => this.value.includes(item.key)).map(item => item.key);
                 } else {
                     if (!this.options.filter(item => this.value == item.key)) this.value = null;
                 }
