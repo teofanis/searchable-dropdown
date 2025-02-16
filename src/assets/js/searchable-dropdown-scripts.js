@@ -46,7 +46,7 @@ function findMe(name)
                 this.setup = true;
                 this.options = this.data;
                 if (this.context && this.entangle) {
-                    var livewireParent = window.livewire.find(this.context);
+                    var livewireParent = window.Livewire.find(this.context);
                     this.value = livewireParent.get(this.entangle);
                     this.$watch('value', (updateValue) => {
                         livewireParent.set(this.entangle, updateValue);

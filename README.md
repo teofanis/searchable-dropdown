@@ -12,9 +12,18 @@ It can be used as a normal dropdown or a multiple selection dropdown.
 
 You can install the package via composer:
 
+Please note if you use Livewire 2.x you should install the 1.x version of the package.
+
+
 ```bash
-composer require teofanis/searchable-dropdown
+composer require teofanis/searchable-dropdown:^1.0
 ```
+Livewire 3.x
+```bash
+composer require teofanis/searchable-dropdown // or composer require teofanis/searchable-dropdown:^2.0
+
+```
+
 Publish the dropdowns' config and asset files
 ```bash
 php artisan vendor:publish --tag=searchable-dropdown-config
